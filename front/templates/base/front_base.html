@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/message.min.js' %}"></script>
+    <script src="{% static 'js/auth.min.js' %}"></script>
+    <script src="{% static 'js/xfzajax.min.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.nav li a').each(function () {
+                let As = $(this);
+                if(As[0].href===String(window.location)){
+                    As.parent().addClass('active');
+                }
+            })
+        })
+    </script>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/icon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/common/auth.min.css' %}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo-box">
+                <a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="小饭桌图标"></a>
+            </div>
+
+            <ul class="nav">
+                <li><a href="{% url 'index' %}">创业资讯</a></li>
+                <li><a href="{% url 'course:index' %}">创业课堂</a></li>
+                <li><a href="{% url 'payinfo:index' %}">付费资讯</a></li>
+                <li><a href="{% url 'news:search' %}">搜索</a></li>
+            </ul>
+
+            <div class="auth-box">
+                <img src="{% static 'images/user.png' %}" alt="用户登录" class="user">
+                {% if user.is_authenticated %}
+                    <a href="#" class="authenticated-box">{{ user.username }}</a>
+                    <div class="user-more-box">
+                        <i class="triangle"></i>
+                        <a href="">个人中心</a>
+                        {% if user.is_staff %}
+                            <a href="{% url 'backend_auth:index' %}">管理系统</a>
+                        {% endif %}
+                        <a href="{% url 'xfz_auth:logout' %}">退出登录</a>
+                    </div>
+                {% else %}
+                    <a href="#" class="signin-btn">登录</a> /
+                    <a href="#" class="signup-btn">注册</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    {% block main %}{% endblock %}
+
+    <footer class="footer">
+        <div class="top-group">
+            <div class="top-inner-group">
+                <div class="logo-box"></div>
+                <div class="detail-group">
+                    <div class="line1">
+                        <ul class="links">
+                            <li><a href="">关于小饭桌</a></li>
+                            <li><a href="">创业课堂</a></li>
+                            <li><a href="">寻求报道</a></li>
+                            <li><a href="">创业礼包</a></li>
+                        </ul>
+                        <span class="about-us">关于我们：</span>
+                        <ul class="footer_social">
+                                <li class="weixin">
+                                    <span class="text">微信公众号</span>
+                                    <div class="wx_code"></div>
+                                </li>
+                                <li class="weibo"><a class="text" href="#">小饭桌创业课堂</a></li>
+                        </ul>
+                    </div>
+                    <div class="line2">
+                        <p class="address">成都市成华区二仙桥成都理工大学</p>
+                        <p class="contact">联系方式：123 4567 8900（工作日10-18点）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-group">© 2019上海乘龙科技有限公司</div>
+    </footer>
+
+    <div class="mask-wrapper">
+        <div class="auth-wrapper">
+            <div class="close-wrapper">
+                <span class="close-btn">×</span>
+            </div>
+            <div class="form-wrapper">
+                <div class="scroll-wrapper">
+                    <div class="signin-group auth-group">
+                        <div class="head-group">
+                            <span class="title">请登录</span>
+                            <a href="javascript: void(0);" class="switch">立即注册></a>
+                        </div>
+                        <div class="content-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="telephone" placeholder="请输入手机号码">
+                                <input type="password" class="form-control" name="password" placeholder="请输入密码">
+                                <label class="remember"><input type="checkbox" name="remember" value="1">记住密码</label>
+                                <input type="submit" class="submit-btn" value="立即登录">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="signup-group auth-group">
+                        <div class="head-group">
+                            <span class="title">请注册</span>
+                            <a href="javascript: void(0);" class="switch">立即登录<</a>
+                        </div>
+                        <div class="content-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="telephone" placeholder="手机号码">
+                                <input type="text" class="form-control" name="username" placeholder="用户名">
+                                <input type="text" class="form-control" id="img_code" name="img_code" placeholder="图形验证码">
+                                <div class="code_pic">
+                                    <img src="{% url 'xfz_auth:img_captcha' %}" alt="" class="img_captcha">
+                                    <span class="change">看不清，换一张</span>
+                                </div>
+                                <input type="password" class="form-control" name="password1" placeholder="密码">
+                                <input type="password" class="form-control" name="password2" placeholder="确认密码">
+                                <input type="text" class="form-control" id="msg_code" name="msg_code" placeholder="短信验证码">
+                                <span class="sendmsg-btn">发送验证码</span>
+                                <input type="submit" class="submit-btn" value="立即注册">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

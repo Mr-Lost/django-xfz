@@ -1,0 +1,108 @@
+{% extends 'base/front_base.html' %}
+{% load static %}
+{% load news_filters %}
+
+{% block title %}
+    新闻详情页demo
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/news/detail.min.css' %}">
+    <script src="{% static 'js/art-template/template-web.js' %}"></script>
+    <script src="{% static 'js/news/detail.min.js' %}"></script>
+    <script id="comment-item" type="text/html">
+        {% verbatim %}
+        <li class="comment">
+            <div class="comment-info">
+                <img src="http://p3.music.126.net/qEKYfdFgHYWGMFQd9QUMqg==/18987466300161003.jpg?param=30y30" alt="">
+                <span class="user">{{ comment.author.username }}</span>
+                <span class="pub-time">{{ comment.pub_time|timeSince }}</span>
+            </div>
+            <p class="comment-text">{{ comment.content }}</p>
+        </li>
+        {% endverbatim %}
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="main">
+    	<div class="wrapper">
+    		<div class="content-wrapper">
+    			<div class="news-wrapper">
+    				<h1 class="title">{{ news.title }}</h1>
+                    <div class="news-info">
+                        <div class="info-group">
+                            <span class="author">{{ news.author.username }}</span>
+                            <span class="pub-time">{{ news.pub_time|time_since }}</span>
+                            <span class="category">{{ news.category.name }}</span>
+                        </div>
+                        <div class="share-group">
+                            <span>分享至：</span>
+                            <a class="weixin"></a>
+                            <a class="weibo"></a>
+                        </div>
+                    </div>
+                    <div class="news-detail">
+                        {{ news.content|safe }}
+                    </div>
+    			</div>
+                <div class="comment-wrapper">
+                    <h3 class="title">文章评论（3）</h3>
+                    <label><textarea name="comment-textarea" class="comment-textarea nologin-textarea" placeholder="立即登录，参与评论~"></textarea></label>
+                    <div class="comment-submit">
+                        <button data-news_id="{{ news.id }}" class="submit">立即评论</button>
+                    </div>
+                    <ul class="comment-list">
+                        {% for comment in news.comments.all %}
+                            <li class="comment">
+                                <div class="comment-info">
+                                    <img src="http://p3.music.126.net/qEKYfdFgHYWGMFQd9QUMqg==/18987466300161003.jpg?param=30y30" alt="">
+                                    <span class="user">{{ comment.author.username }}</span>
+                                    <span class="pub-time">{{ comment.pub_time|time_since }}</span>
+                                </div>
+                                <p class="comment-text">{{ comment.content }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+    		</div>
+    		<div class="sidebar-wrapper">
+                <div class="title-group">
+                    <span class="title">在线课堂</span>
+                    <a href="">更多</a>
+                </div>
+                <div class="advertise-group">
+                    <a href=""><img src="{% static 'images/advertise1.jpg' %}" alt=""></a>
+                </div>
+                <div class="title-group">
+                    <span class="title">关注我们</span>
+                </div>
+                <div class="focus-group">
+                    <ul class="social-group">
+                        <li class="zhihu"><a href="" target="_blank">关注小饭桌创业课堂</a></li>
+                        <li class="weibo"><a href="" target="_blank">关注小饭桌创业课堂</a></li>
+                        <li class="toutiao"><a href="" target="_blank">关注小饭桌</a></li>
+                    </ul>
+                    <div class="gzh-group">
+                        <p class="desc">扫码关注微信公众号</p>
+                    </div>
+                </div>
+                <div class="title-group">
+                    <span class="title">热点推荐</span>
+                </div>
+                <div class="hot-news-group">
+                    <ul class="hot-news">
+                        <li class="news-content">
+                            <div class="title"><a href="">赵薇真敢说！《演员请就位》仅上映2天，就发微博吐槽节目组</a></div>
+                            <div class="more">
+                                <span class="category">娱乐</span>
+                                <span class="pub-time">2019-10-14 09:35:16</span>
+                            </div>
+                        </li>
+                        <li class="news-pic"><a href=""><img src="{% static 'images/news2.jpg' %}" alt=""></a></li>
+                    </ul>
+                </div>
+            </div>
+    	</div>
+    </div>
+{% endblock %}

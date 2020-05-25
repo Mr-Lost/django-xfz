@@ -1,0 +1,61 @@
+{% extends 'base/front_base.html' %}
+{% load static %}
+
+{% block title %}
+    课程首页demo
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/course/index.min.css' %}">
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script>
+        $(function () {
+            var courseList = $('.course-list li');
+            console.log(courseList, courseList.length);
+            for(var i=0; i<courseList.length; i++){
+                if(!(i%4)){
+                    courseList.eq(i).css({'margin-left': 0});
+                }
+            }
+        })
+    </script>
+{% endblock %}
+
+{% block main %}
+    <main class="main">
+        <div class="course-nav">
+            <div class="nav-container">
+                <h3 class="title">在线课堂</h3>
+    <!--        ul.nav-list>li*4>a['#']                 -->
+                <ul class="nav-list">
+                    <li class="active"><a href="#">最新课堂</a></li>
+                    <li><a href="#">投资人说</a></li>
+                    <li><a href="#">明星案例</a></li>
+                    <li><a href="#">创业知识</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="wrapper">
+            <ul class="course-list">
+                {% for course in courses %}
+                    <li><a href="{% url 'course:detail' course_id=course.pk %}">
+                        <div class="course-thumbnail">
+                            <img src="{{ course.cover_url }}" alt="">
+                        </div>
+                        <div class="course-info">
+                            <p class="title">{{ course.title }}</p>
+                            <p class="author">{{ course.teacher.name }}</p>
+                            <p class="price">
+                                {% if course.price > 0 %}
+                                    <span class="pay">￥{{ course.price }}</span>
+                                {% else %}
+                                    <span class="free">免费</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+{% endblock %}

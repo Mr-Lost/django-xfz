@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录注册测试demo</title>
+    <link rel="stylesheet" href="{% static 'css/common/auth.min.css' %}">
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/auth.min.js' %}"></script>
+</head>
+<body>
+    <button id="btn">登录/注册</button>
+    <div class="mask-wrapper">
+        <div class="auth-wrapper">
+            <div class="close-wrapper">
+                <span class="close-btn">×</span>
+            </div>
+            <div class="form-wrapper">
+                <div class="scroll-wrapper">
+                    <div class="signin-group auth-group">
+                        <div class="head-group">
+                            <span class="title">请登录</span>
+                            <a href="javascript: void(0);" class="switch">立即注册></a>
+                        </div>
+                        <div class="content-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="telephone" placeholder="请输入手机号码">
+                                <input type="password" class="form-control" name="password" placeholder="请输入密码">
+                                <label class="remember"><input type="checkbox" name="remember" value="1">记住密码</label>
+                                <input type="submit" class="submit-btn" value="立即登录">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="signup-group auth-group">
+                        <div class="head-group">
+                            <span class="title">请注册</span>
+                            <a href="javascript: void(0);" class="switch">立即登录<</a>
+                        </div>
+                        <div class="content-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="telephone" placeholder="手机号码">
+                                <input type="text" class="form-control" name="username" placeholder="用户名">
+                                <input type="text" class="form-control" id="img_code" name="img_code" placeholder="图形验证码">
+                                <div class="code_pic">
+                                    <img src="" alt="验证码" class="img_captcha">
+                                    <span class="change">看不清，换一张</span>
+                                </div>
+                                <input type="password" class="form-control" name="password1" placeholder="密码">
+                                <input type="password" class="form-control" name="password2" placeholder="确认密码">
+                                <input type="text" class="form-control" id="msg_code" name="msg_code" placeholder="短信验证码">
+                                <div class="sendmsg-btn"><input type="submit" value="发送验证码"></div>
+                                <input type="submit" class="submit-btn" value="立即注册">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

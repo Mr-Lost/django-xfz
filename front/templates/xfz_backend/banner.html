@@ -1,0 +1,90 @@
+{% extends 'xfz_backend/base.html' %}
+{% load static %}
+
+{% block title %}
+    轮播图
+{% endblock %}
+
+{% block head %}
+    <style>
+        .banner-item{width: 800px; background: white; overflow: hidden; padding: 10px; box-sizing: border-box; margin-bottom: 20px; box-shadow: 0 -5px 10px 0 rgba(0,0,0,0.3);}
+        .box-header{overflow: hidden; margin-bottom: 10px; box-sizing: border-box;}
+        .box-header span{float: left;}
+        .thumbnail-group{width: 230px; height: 100px; float: left;}
+        .thumbnail-group img{width: 100%; height: 100%;}
+        .more-group{width: 500px; margin-left: 20px; float: left;}
+    </style>
+    <script src="{% static 'js/art-template/template-web.js' %}"></script>
+    <script src="{% static 'js/backend/banners.min.js' %}"></script>
+    <script id="banner-item" type="text/html">
+        {% verbatim %}
+            {{ if banner }}
+            <div class="box banner-item" data-banner-id="{{ banner.id }}">
+            {{ else }}
+            <div class="box banner-item">
+            {{ /if }}
+                <div class="box-header">
+                    {{ if banner }}
+                        <span class="priority">优先级：{{ banner.priority }}</span>
+                    {{ else }}
+                        <span class="priority">优先级：0</span>
+                    {{ /if }}
+                    <button id="remove-btn" class="btn btn-default btn-xs float-right">
+                        <i class="fa fa-window-close"></i>
+                    </button>
+                </div>
+                <div class="box-body">
+                    <div class="thumbnail-group">
+                        <input type="file" class="image-input" style="display: none">
+                        {{ if banner }}
+                            <img src="{{ banner.image_url }}" class="thumbnail" alt="">
+                        {{ else }}
+                            <img src="/static/images/add_banner.png" class="thumbnail" alt="">
+                        {{ /if }}
+                    </div>
+                    <div class="more-group">
+                        <div class="form-group">
+                            {{ if banner }}
+                                <input type='number' name="priority" class="form-control" value="{{ banner.priority }}">
+                            {{ else }}
+                                <input type='number' name="priority" class="form-control" placeholder="请输入一个优先级">
+                            {{ /if }}
+                        </div>
+                        <div class="form-group">
+                            {{ if banner }}
+                                <input type="text" name="link_to" class="form-control" value="{{ banner.link_to }}">
+                            {{ else }}
+                                    <input type="text" name="link_to" class="form-control" placeholder="该图片跳转到的链接地址">
+                            {{ /if }}
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button id="save-btn" class="btn btn-primary float-right">保存</button>
+                </div>
+            </div>
+        {% endverbatim %}
+    </script>
+{% endblock %}
+
+{% block content-header %}
+    <h1>轮播图管理系统</h1>
+{% endblock %}
+
+{% block content %}
+    <div id="add-header" class="row">
+        <div class="col-md-12">
+            <div class="btn-group" style="float: left;">
+                <button id="add-btn" class="btn btn-primary">
+                    <i class="fa fa-plus"></i>
+                    添加轮播图
+                </button>
+            </div>
+            <ul class="info" style="float: left; width: 400px;">
+                <li>支持JPG，GIF，PNG格式，最多上传6张</li>
+                <li>比例4:1，宽度在800px以上，大小在5M以内</li>
+            </ul>
+        </div>
+    </div>
+    <div class="banner-list-group"></div>
+{% endblock %}
