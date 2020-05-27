@@ -1,2 +1,2 @@
 # django-xfz
-Just for personal entertainment
+A news website based on Django by the separation of front-end and backend development.
